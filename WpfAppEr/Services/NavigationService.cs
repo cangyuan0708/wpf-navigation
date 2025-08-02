@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MahApps.Metro.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
 using WpfAppEr.Base;
 
@@ -6,66 +7,80 @@ namespace WpfAppEr.Services;
 
 public class NavigationService(IServiceProvider serviceProvider) : INavigationService
 {
-    private readonly Dictionary<string, (Type ViewType, Type ViewModelType)> _map = [];
+    private readonly Dictionary<string, Type> _map = [];
     private readonly Stack<(string ViewName, object? Parameter)> _navigationHistory = new();
-    private Action<UserControl>? _setViewAction;
     private UserControl? _currentView = null;
 
-    public void SetViewAction(Action<UserControl> setViewAction) => _setViewAction = setViewAction;
+    private TransitioningContentControl? _contentControl;
+    private Action<UserControl>? _setViewAction;
 
-    public void Register<TView, TViewModel>(string viewName) where TView : UserControl where TViewModel : BaseViewModel => _map[viewName] = (typeof(TView), typeof(TViewModel));
+    public void Initialize(TransitioningContentControl contentControl, Action<UserControl> setViewAction)
+    {
+        _contentControl = contentControl;
+        _setViewAction = setViewAction;
+    }
 
-    public void NavigateTo(string viewName, object? parameter = null)
+    public void Register<TView>(string viewName) where TView : UserControl
+    {
+        _map[viewName] = typeof(TView);
+    }
+
+    public async Task NavigateToAsync(string viewName, object? parameter = null)
     {
         if (_navigationHistory.Count > 0 && _navigationHistory.Peek().ViewName == viewName)
+        {
             _navigationHistory.Pop();
+            _contentControl!.Transition = TransitionType.Default;
+        }
+        else
+            _contentControl!.Transition = TransitionType.LeftReplace;
 
         _navigationHistory.Push((viewName, parameter));
-        NavigateCore(viewName, parameter);
+
+        await NavigateCoreAsync(viewName, parameter);
     }
 
-    public void GoBack()
+    public async Task GoBackAsync()
     {
-        if (_navigationHistory.Count > 1)
-        {
-            _navigationHistory.Pop();
-            var (viewName, parameter) = _navigationHistory.Peek();
-            NavigateCore(viewName, parameter);
-        }
+        
+        if (_navigationHistory.Count <= 1) return;
+        _navigationHistory.Pop();
+        var (viewName, parameter) = _navigationHistory.Peek();
+        _contentControl!.Transition = TransitionType.RightReplace;
+        await NavigateCoreAsync(viewName, parameter);
     }
 
-    public void GoHome()
+    public async Task GoHomeAsync()
     {
-        if (_navigationHistory.Count > 1)
-        {
-            var first = _navigationHistory.Last();
-            _navigationHistory.Clear();
-            _navigationHistory.Push(first);
-            var (viewName, parameter) = _navigationHistory.Peek();
-            NavigateCore(viewName, parameter);
-        }
+        if (_navigationHistory.Count <= 1) return;
+        var first = _navigationHistory.Last();
+        _navigationHistory.Clear();
+        _navigationHistory.Push(first);
+        var (viewName, parameter) = _navigationHistory.Peek();
+        _contentControl!.Transition = TransitionType.RightReplace;
+        await NavigateCoreAsync(viewName, parameter);
     }
 
-    private void NavigateCore(string viewName, object? parameter = null)
+    private async Task NavigateCoreAsync(string viewName, object? parameter = null)
     {
         if (!_map.TryGetValue(viewName, out var types))
             throw new InvalidOperationException($"View '{viewName}' is not registered.");
 
+        if (_currentView?.DataContext is IViewModelBase oldVm)
+            await oldVm.OnNavigatedFromAsync();
+
         if (_currentView != null)
         {
-            var oldDataContext = _currentView.DataContext;
-            _currentView.DataContext = null;
-
-            if (oldDataContext is IDisposable disposableOldVm)
+            if (_currentView.DataContext is IDisposable disposableOldVm)
                 disposableOldVm.Dispose();
+            _currentView.DataContext = null;
         }
 
-        var view = (UserControl)serviceProvider.GetRequiredService(types.ViewType);
-        var viewModel = (BaseViewModel)serviceProvider.GetRequiredService(types.ViewModelType);
-        view.DataContext = viewModel;        
+        var view = (UserControl)serviceProvider.GetRequiredService(types);
+        if (view.DataContext is IViewModelBase viewModel)
+            await viewModel.OnNavigatedToAsync(parameter);
 
         _currentView = view;
         _setViewAction?.Invoke(view);
-        viewModel.OnNavigatedTo(parameter);
     }
 }

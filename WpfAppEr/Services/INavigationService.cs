@@ -1,13 +1,13 @@
-﻿using System.Windows.Controls;
-using WpfAppEr.Base;
+﻿using MahApps.Metro.Controls;
+using System.Windows.Controls;
 
 namespace WpfAppEr.Services;
 
 public interface INavigationService
 {
-    void SetViewAction(Action<UserControl> setViewAction);
-    void NavigateTo(string viewName, object? parameter = null);
-    void Register<TView, TViewModel>(string viewName) where TView : UserControl where TViewModel : BaseViewModel;
-    void GoBack();
-    void GoHome();
+    void Initialize(TransitioningContentControl contentControl, Action<UserControl> setViewAction);
+    void Register<TView>(string viewName) where TView : UserControl;
+    Task NavigateToAsync(string viewName, object? parameter = null);
+    Task GoBackAsync();
+    Task GoHomeAsync();
 }

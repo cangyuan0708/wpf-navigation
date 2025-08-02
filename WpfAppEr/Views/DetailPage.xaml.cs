@@ -1,12 +1,13 @@
 ﻿using System.Windows.Controls;
+using WpfAppEr.ViewModels;
 
-namespace WpfAppEr.Views
+namespace WpfAppEr.Views;
+
+public partial class DetailPage : UserControl
 {
-    public partial class DetailPage : UserControl
+    public DetailPage(DetailPageViewModel vm)
     {
-        public DetailPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = vm;
     }
 }
