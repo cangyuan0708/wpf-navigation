@@ -9,8 +9,9 @@ public partial class DetailPageViewModel(INavigationService navigationService) :
     private int _id;
     public string? DetailData { get; private set; }
 
-    public override void OnNavigatedTo(object? parameter = null)
+    public override async Task OnNavigatedToAsync(object? parameter = null)
     {
+        await Task.CompletedTask;
         if (parameter is int id)
         {
             _id = id;
@@ -25,8 +26,8 @@ public partial class DetailPageViewModel(INavigationService navigationService) :
     }
 
     [RelayCommand]
-    private void GoBack()
+    private async Task GoBack()
     {
-        NavigationService.GoBack();
+        await NavigationService.GoBackAsync();
     }
 }

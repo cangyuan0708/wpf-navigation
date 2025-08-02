@@ -8,9 +8,9 @@ namespace WpfAppEr.ViewModels;
 public partial class MainPageViewModel(INavigationService navigationService) : BaseViewModel(navigationService)
 {
     [RelayCommand]
-    private void GoToDetail()
+    private async Task GoToDetail()
     {
         int exampleId = 123;
-        NavigationService.NavigateTo(nameof(DetailPage), exampleId);
+        await NavigationService.NavigateToAsync(nameof(DetailPage), exampleId);
     }
 }

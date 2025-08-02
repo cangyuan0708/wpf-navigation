@@ -7,6 +7,6 @@ namespace WpfAppEr.Base
     {
         protected readonly INavigationService NavigationService = navigationService;
 
-        public virtual void OnNavigatedTo(object? parameter = null) { }
+        public virtual Task OnNavigatedToAsync(object? parameter = null) => Task.CompletedTask;
     }
 }
