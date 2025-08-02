@@ -1,14 +1,13 @@
 ﻿using System.Windows.Controls;
 using WpfAppEr.ViewModels;
 
-namespace WpfAppEr.Views
+namespace WpfAppEr.Views;
+
+public partial class MainPage : UserControl
 {
-    public partial class MainPage : UserControl
+    public MainPage(MainPageViewModel vm)
     {
-        public MainPage(MainPageViewModel vm)
-        {
-            InitializeComponent();
-            DataContext = vm;
-        }
+        InitializeComponent();
+        DataContext = vm;
     }
 }

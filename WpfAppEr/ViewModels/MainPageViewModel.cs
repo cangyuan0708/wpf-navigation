@@ -5,7 +5,7 @@ using WpfAppEr.Views;
 
 namespace WpfAppEr.ViewModels;
 
-public partial class MainPageViewModel(INavigationService navigationService) : BaseViewModel(navigationService)
+public partial class MainPageViewModel(INavigationService navigationService) : ViewModelBase(navigationService)
 {
     [RelayCommand]
     private async Task GoToDetail()

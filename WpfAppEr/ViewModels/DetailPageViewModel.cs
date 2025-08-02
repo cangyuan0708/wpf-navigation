@@ -4,7 +4,7 @@ using WpfAppEr.Services;
 
 namespace WpfAppEr.ViewModels;
 
-public partial class DetailPageViewModel(INavigationService navigationService) : BaseViewModel(navigationService)
+public partial class DetailPageViewModel(INavigationService navigationService) : ViewModelBase(navigationService)
 {
     private int _id;
     public string? DetailData { get; private set; }
@@ -29,5 +29,10 @@ public partial class DetailPageViewModel(INavigationService navigationService) :
     private async Task GoBack()
     {
         await NavigationService.GoBackAsync();
+    }
+
+    public override async Task OnNavigatedFromAsync()
+    {
+        await Task.CompletedTask;
     }
 }

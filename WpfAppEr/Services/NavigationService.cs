@@ -66,17 +66,18 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         if (!_map.TryGetValue(viewName, out var types))
             throw new InvalidOperationException($"View '{viewName}' is not registered.");
 
+        if (_currentView?.DataContext is IViewModelBase oldVm)
+            await oldVm.OnNavigatedFromAsync();
+
         if (_currentView != null)
         {
-            var oldDataContext = _currentView.DataContext;
-            _currentView.DataContext = null;
-
-            if (oldDataContext is IDisposable disposableOldVm)
+            if (_currentView.DataContext is IDisposable disposableOldVm)
                 disposableOldVm.Dispose();
+            _currentView.DataContext = null;
         }
 
         var view = (UserControl)serviceProvider.GetRequiredService(types);
-        if (view.DataContext is BaseViewModel viewModel)
+        if (view.DataContext is IViewModelBase viewModel)
             await viewModel.OnNavigatedToAsync(parameter);
 
         _currentView = view;
