@@ -1,6 +1,6 @@
-﻿namespace WpfAppEr.Base;
+﻿namespace KernelBaseLibrary.Contracts.Base;
 
-public interface IViewModelBase
+public interface IPageViewModelBase
 {
     Task OnNavigatedToAsync(object? parameter = null);
     Task OnNavigatedFromAsync();

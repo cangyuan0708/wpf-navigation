@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
-using WpfAppEr.ViewModels;
+using WpfAppEr.ViewModels.Page;
 
-namespace WpfAppEr.Views;
+namespace WpfAppEr.Views.Page;
 
 public partial class MainPage : UserControl
 {

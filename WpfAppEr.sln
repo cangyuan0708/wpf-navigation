@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAppEr", "WpfAppEr\WpfAppEr.csproj", "{9A7F4E14-7CF3-4D35-B6B3-211DF8641FC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UICustomLibrary", "UICustomLibrary\UICustomLibrary.csproj", "{B60DD0C6-A0C8-430C-B5C0-7A40116BF66C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernelBaseLibrary", "KernelBaseLibrary\KernelBaseLibrary.csproj", "{BD5DBC60-BD09-4BD8-85FA-27B3421539D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9A7F4E14-7CF3-4D35-B6B3-211DF8641FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A7F4E14-7CF3-4D35-B6B3-211DF8641FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A7F4E14-7CF3-4D35-B6B3-211DF8641FC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B60DD0C6-A0C8-430C-B5C0-7A40116BF66C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60DD0C6-A0C8-430C-B5C0-7A40116BF66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60DD0C6-A0C8-430C-B5C0-7A40116BF66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60DD0C6-A0C8-430C-B5C0-7A40116BF66C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD5DBC60-BD09-4BD8-85FA-27B3421539D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD5DBC60-BD09-4BD8-85FA-27B3421539D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD5DBC60-BD09-4BD8-85FA-27B3421539D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD5DBC60-BD09-4BD8-85FA-27B3421539D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

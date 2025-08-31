@@ -1,7 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using System.Windows.Controls;
 
-namespace WpfAppEr.Services;
+namespace KernelBaseLibrary.Contracts.Services;
 
 public interface INavigationService
 {

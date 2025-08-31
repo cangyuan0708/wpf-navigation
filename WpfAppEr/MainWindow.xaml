@@ -11,9 +11,22 @@
     d:DesignWidth="800"
     Loaded="Window_Loaded"
     Title="MainWindow">
-    <mah:TransitioningContentControl
-        x:Name="Transitioner"
-        Transition="Default"
-        HorizontalContentAlignment="Stretch"
-        VerticalContentAlignment="Stretch" />
+    <Grid>
+        <mah:TransitioningContentControl
+            x:Name="Transitioner"
+            Transition="Default"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch" />
+        <Grid
+            x:Name="PopupOverlay"
+            Visibility="Hidden"
+            Background="#80FFFFFF"
+            Panel.ZIndex="100">
+            <mah:TransitioningContentControl
+                x:Name="PopupHost"
+                Transition="Up"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch" />
+        </Grid>
+    </Grid>
 </Window>

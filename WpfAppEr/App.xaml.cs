@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using KernelBaseLibrary;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
-using WpfAppEr.Services;
-using WpfAppEr.ViewModels;
-using WpfAppEr.Views;
 
 namespace WpfAppEr;
 
@@ -15,21 +13,10 @@ public partial class App : Application
         base.OnStartup(e);
 
         IServiceCollection serviceCollection = new ServiceCollection();
-        ConfigureServices(serviceCollection);
+        serviceCollection.ConfigureServices();
         ServiceProvider = serviceCollection.BuildServiceProvider();
 
         MainWindow mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
         mainWindow.Show();
-    }
-
-    private static void ConfigureServices(IServiceCollection services)
-    {
-        services
-            .AddTransient<MainWindow>()
-            .AddSingleton<INavigationService, NavigationService>()
-            .AddTransient<MainPageViewModel>()
-            .AddTransient<DetailPageViewModel>()
-            .AddTransient<MainPage>()
-            .AddTransient<DetailPage>();
     }
 }

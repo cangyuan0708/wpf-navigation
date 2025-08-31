@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="WpfAppEr.Views.Popup.MyPopupView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:control="clr-namespace:UICustomLibrary.Controls;assembly=UICustomLibrary"
+    mc:Ignorable="d"
+    Height="500"
+    Width="1000"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <Border
+        CornerRadius="10"
+        Background="Gainsboro">
+        <StackPanel Margin="10">
+            <TextBlock
+                Grid.Row="0"
+                Text="{Binding Message}"
+                FontSize="16" />
+            <control:RadiusButton
+                Foreground="Black"
+                Background="White"
+                HoverBackground="Bisque"
+                Height="40"
+                Content="Close"
+                Command="{Binding CloseCommand}" />
+        </StackPanel>
+    </Border>
+</UserControl>
